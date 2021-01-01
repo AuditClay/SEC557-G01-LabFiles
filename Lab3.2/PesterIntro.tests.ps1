@@ -1,5 +1,5 @@
-Context "SEC557 Pester Example Context" {
-    Describe "Test Set 1" {
+Describe "SEC557 Pester Example Context" {
+    Context "Test Set 1" {
         It "My first Pester test" {
             $true | Should -Be $true
         }
@@ -9,7 +9,7 @@ Context "SEC557 Pester Example Context" {
         }
     }
 
-    Describe "Test Set 2" {
+    Context "Test Set 2" {
         It "Set 2 - Test 1" {
             [Math]::PI | Should -BeGreaterThan 3
         }
