@@ -8,4 +8,10 @@ Context "SEC557 Pester Example Context" {
             $true | Should -Be $false
         }
     }
+
+    Describe "Test Set 2" {
+        It "Set 2 - Test 1" {
+            [Math]::PI | Should -BeGreaterThan 3
+        }
+    }
 }

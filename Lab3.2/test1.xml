@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="3" errors="0" failures="1" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2021-01-01" time="11:10:14">
+  <environment user-domain="RCI-P50" cwd="C:\Users\Clay\Documents\GitHub\SEC557-G01-LabFiles\Lab3.2" machine-name="RCI-P50" clr-version="Unknown" platform="Microsoft Windows 10 Pro|C:\WINDOWS|\Device\Harddisk1\Partition2" os-version="10.0.18363" user="Clay" nunit-version="2.5.8.0" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Failure" success="False" time="0.2209" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="C:\Users\Clay\Documents\GitHub\SEC557-G01-LabFiles\Lab3.2\PesterIntro.tests.ps1" executed="True" result="Failure" success="False" time="0.2209" asserts="0" description="C:\Users\Clay\Documents\GitHub\SEC557-G01-LabFiles\Lab3.2\PesterIntro.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="SEC557 Pester Example Context" executed="True" result="Failure" success="False" time="0.1747" asserts="0" description="SEC557 Pester Example Context">
+            <results>
+              <test-suite type="TestFixture" name="SEC557 Pester Example Context.Test Set 1" executed="True" result="Failure" success="False" time="0.0693" asserts="0" description="SEC557 Pester Example Context.Test Set 1">
+                <results>
+                  <test-case description="My first Pester test" name="SEC557 Pester Example Context.Test Set 1.My first Pester test" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="A test that will fail" name="SEC557 Pester Example Context.Test Set 1.A test that will fail" time="0.0102" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected $false, but got $true.
+at $true | Should -Be $false, C:\Users\Clay\Documents\GitHub\SEC557-G01-LabFiles\Lab3.2\PesterIntro.tests.ps1:8</message>
+                      <stack-trace>at &lt;ScriptBlock&gt;, C:\Users\Clay\Documents\GitHub\SEC557-G01-LabFiles\Lab3.2\PesterIntro.tests.ps1:8</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="SEC557 Pester Example Context.Test Set 2" executed="True" result="Success" success="True" time="0.1272" asserts="0" description="SEC557 Pester Example Context.Test Set 2">
+                <results>
+                  <test-case description="Set 2 - Test 1" name="SEC557 Pester Example Context.Test Set 2.Set 2 - Test 1" time="0.0027" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
