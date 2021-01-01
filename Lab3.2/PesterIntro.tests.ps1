@@ -13,5 +13,9 @@ Context "SEC557 Pester Example Context" {
         It "Set 2 - Test 1" {
             [Math]::PI | Should -BeGreaterThan 3
         }
+
+        It "Set 2 - Test 2" {
+            [Math]::PI | Should -BeLessOrEqual 3.1
+        }
     }
 }
