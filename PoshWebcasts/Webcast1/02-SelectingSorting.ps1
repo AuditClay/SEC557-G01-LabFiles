@@ -94,8 +94,8 @@ Get-Service |Group-Object -Property StartType
 1,2,3,4,5 | Measure-Object -Average
 1,2,3,4,5 | Measure-Object -Average -Sum -Maximum -Minimum
 
-#Format-List puts output into one-property-per-line style
-#Format-Table builds a one-object-per-line table
+#Format-List puts output into one-property-per-line style - aliased to fl
+#Format-Table builds a one-object-per-line table - aliased to ft
 #Some cmdlets return different numbers of properties depending on how
 #you format the output...
 Get-Service | fl
