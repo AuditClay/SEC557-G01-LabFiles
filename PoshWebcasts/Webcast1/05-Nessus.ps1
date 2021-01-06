@@ -1,4 +1,4 @@
-"Demo for ISACANTX Nov 13, 2020"
+"Demo for SEC557 Classes"
 ############################################################################
 #NOTE TO CLAY: Run this from your laptop, not the VM, because it uses Excel#
 ############################################################################

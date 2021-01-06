@@ -1,3 +1,7 @@
+#This function is not used in this script, but is included to show how the input files were developed.
+#The output was run through Export-CSV to create the CSV files used as input for the loop at the bottom
+#of the script
+
 function generateData()
 {
         #Mfr, model, Acq date (1-2000), Asset tag, serial, BU
@@ -13,13 +17,16 @@ function generateData()
         }
 }
 
+#This script builds the inventory spreadsheet for Lab 1.3 it uses CSV input files and adds a worksheet for each to a new Excel workbook.
 $outputFileName = ".\Inventory.xlsx"
 
+#Remove any existing output files
 if( Test-Path -Path $outputFileName)
 {
     Remove-Item $outputFileName
 }
 
+#Add the worksheets for the three different inventory collections
 foreach ($tab in "Servers","Workstations","Network") {
     $fileName = "$tab.csv"
 
