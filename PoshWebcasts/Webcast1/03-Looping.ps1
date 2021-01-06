@@ -1,4 +1,7 @@
-﻿
+﻿#NOTE TO CLAY: Run these from VSCode, since Start-Demo doesn't do well with 
+#multiline commands...
+
+
 #standard FOR loop - similar to other languages
 for($x=20;$x -lt 30;$x++) {
   Invoke-Expression "ping -n 1 127.0.1.$x"
