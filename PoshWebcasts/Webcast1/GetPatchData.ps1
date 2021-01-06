@@ -5,6 +5,8 @@
     HotFixID, Description, InstalledBy |Where-Object InstalledOn -lt (Get-Date) |
   Export-Csv -Force -NoTypeInformation -Path patches.csv
 
+"Annual patch data written to: patches.csv"  
+
   Get-Content .\patchAgeInput.csv |
   ConvertFrom-Csv |
   Select-Object ServerName, ` 
@@ -12,4 +14,4 @@
     PatchAge |Where-Object Date -lt (Get-Date) |
   Export-Csv -Force -NoTypeInformation -Path patchAge.csv
   
- 
+"Annual patch age data written to: patchAge.csv" 
