@@ -73,7 +73,7 @@ Get-Service | Select-Object Name, Status, StartType | Sort-Object Status, StartT
 
 Get-Content .\services.txt
 
-#Determine the PowerShell version installed
+#Determine the PowerShell version in use
 $PSVersionTable
 $PSVersionTable.PSVersion
 

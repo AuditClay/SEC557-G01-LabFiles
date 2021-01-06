@@ -1,4 +1,4 @@
-"Demo for ISACANTX Nov 13, 2020"
+"Demo for SEC557 Classes"
 
 # Get a list of all the PSDrives on the system
 Get-PSDrive

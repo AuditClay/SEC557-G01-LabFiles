@@ -1,4 +1,5 @@
-"Demo for ISACANTX Nov 13, 2020"
+"Demo for SEC557 Classes"
+
 #This demo covers the process to import vulnerabilty scan data into Graphite periodically
 #We'll need to build a text file in Graphite input format:
 #metric.name value epcohTime
