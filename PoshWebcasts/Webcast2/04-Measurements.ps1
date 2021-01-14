@@ -53,7 +53,7 @@ Get-HotFix | Group-Object InstalledOn
 
 #Patch age measurements can help in a pinch
 #How many days has it been since the last patch was installed?
-$lastPatchDate = (Get-HotFix | Sort-Object InstalledOn -Descending | Select-Object -First 1)
+$lastPatchDate = (Get-HotFix | Sort-Object InstalledOn -Descending | Select-Object -First 1).Date
 
 #Calculate the age of the newest patch
 (New-TimeSpan -Start $lastPatchDate -End (Get-Date)).TotalDays
