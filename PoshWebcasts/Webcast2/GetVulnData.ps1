@@ -5,5 +5,5 @@
     Risk, Count |
   Export-Csv -Force -NoTypeInformation -Path vulnData.csv
 
-"Vulnerability information for last 1 year written to .\vulnData.csv"
+"Vulnerability information for last 90 days written to .\vulnData.csv"
 
