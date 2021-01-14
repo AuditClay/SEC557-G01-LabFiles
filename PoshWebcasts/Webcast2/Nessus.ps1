@@ -27,7 +27,7 @@ $scanResults | Select-Object -first 1 | Get-Member -MemberType NoteProperty
 $scanResults.Host | Sort-Object -Unique
 
 #How many hosts were scanned?
-$scanResults | Measure-Object
+$scanResults.Host | Sort-Object -Unique | Measure-Object
 
 #you can use the Group-Object command to develop a quick summary of results by risk rating:
 
@@ -63,14 +63,16 @@ Set-Location ..
 .\GetVulnData.ps1
 
 #Let's look at part of the output file:
-Get-Content .\vulnData.csv | Select-Object -first 5
+Get-Content .\vulnData.csv | Select-Object -first 10
 
 #Pull that into a variable
 $results = Import-Csv .\vulnData.csv
 
+$results.Count
+
 #Convert the data for inport into the dashbaord database - view the first 10
 #for a sanity check
-$results | Select-Object ServerName,Risk,@{n='epoch';e={Get-Date -Date $_.DateRun -AsUTC -UFormat %s}},Count | foreach { "vuln." + $_.ServerName.ToString() + "." + $_.Risk.toString() + " " + $_.epoch.ToString() + " " + $_.count} | Select-Object -First 10
+$results | Select-Object ServerName,Risk,@{n='epoch';e={Get-Date -Date $_.DateRun -AsUTC -UFormat %s}},Count | foreach { "vuln." + $_.ServerName.ToString() + "." + $_.Risk.toString() + " " + $_.count + " " + $_.epoch.ToString()} | Select-Object -First 10
 
 #Use netcat in WSL to do the import
-$results | Select-Object ServerName,Risk,@{n='epoch';e={Get-Date -Date $_.DateRun -AsUTC -UFormat %s}},Count | foreach { "vuln." + $_.ServerName.ToString() + "." + $_.Risk.toString() + " " + $_.epoch.ToString() + " " + $_.count} | wsl nc -vv -N 10.50.7.50 2003
+$results | Select-Object ServerName,Risk,@{n='epoch';e={Get-Date -Date $_.DateRun -AsUTC -UFormat %s}},Count | foreach { "vuln." + $_.ServerName.ToString() + "." + $_.Risk.toString() + " " + $_.count + " " + $_.epoch.ToString()} | wsl nc -vv -N 10.50.7.50 2003
