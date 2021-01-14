@@ -59,7 +59,7 @@ $scanResults | Group-Object Host, Risk
 #What if I did something like that PER DAY and saved the results???
 Set-Location ..
 
-#Let's go ask the admins for the results of all the scans for the last year for 100 servers
+#Let's go ask the admins for the results of all the scans for the last 90 days for 50 servers
 .\GetVulnData.ps1
 
 #Let's look at part of the output file:
