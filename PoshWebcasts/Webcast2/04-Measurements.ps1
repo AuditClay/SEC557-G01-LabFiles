@@ -104,7 +104,7 @@ Import-Module ActiveDirectory
 
 #Create a drive mapped to Active Directory. First, we'll need a set of
 #credentials, because this PC is not domain-joined
-$cred=Get-Credential -username auditor -prompt "Enter a password"
+$cred=Get-Credential -username auditor 
 
 #Use the credentitals to connect to our lab DC
 New-PSDrive -name "AD" -PSProvider ActiveDirectory -Root "" -Server "10.50.7.10" -Credential $cred
