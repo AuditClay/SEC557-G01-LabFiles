@@ -127,12 +127,20 @@ Get-ADGroupMember -Recursive -Identity "Domain Admins"
 #Quick visualize to discuss during our daily status meeting
 Get-ADGroupMember -Recursive -Identity "Domain Admins" | Out-GridView
 
-#We often use a script like this on audits
+#Get out of the AD drive
+Set-Location c:
+
+#Remove the PS Drive for AD
+Remove-PSDrive -Name "AD"
+Get-PSDrive
+#We often use a script like this on audits. Given a server name and credential,
+#It will work even from a non-domain-joined machine. Any credentials in the domain
+#will work just fine - no admin required.
 Get-Content .\ADAuditGeneric.ps1
 
-#It gathers interesting information about the given domain. A lot of this
-#would make good measures to track over time on a dashboard
-.\ADAuditGeneric.ps1
+#It gathers interesting information about the given domain. A lot of these
+#would make good measurements to track over time on a dashboard
+.\ADAuditGeneric.ps1 -Server 10.50.7.10 -Credential $cred
 
 #When you tell management they've got too many domain administrators
 #They're going to want a list of who they are. This is true for most of these
@@ -140,10 +148,3 @@ Get-Content .\ADAuditGeneric.ps1
 
 Get-ChildItem *.csv 
 
-
-#Get out of the AD drive
-Set-Location c:
-
-#Remove the PS Drive for AD
-Remove-PSDrive -Name "AD"
-Get-PSDrive
