@@ -5,3 +5,4 @@
     None,Low,Medium,High,Critical,Total |
   Export-Csv -Force -NoTypeInformation -Path vulnData.csv
 
+"Vulnerability information for last 1 year written to .\vulnData.csv"
