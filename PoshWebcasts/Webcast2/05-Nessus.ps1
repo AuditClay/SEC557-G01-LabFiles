@@ -81,6 +81,10 @@ $total = ($d |  Where-Object Risk -ne 'None').Count
 #Check the percentage
 $crit/$total
 
+
+##################### STOP HERE FOR WEBCAST DEMO######################################endregion
+
+
 #Now, let's put the results into an excel file for tactical use by server admins trying to remediate
 #Define the filename and make sure there's not an old one lying around
 $excelFileName = ".\Vulns.xlsx"

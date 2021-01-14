@@ -148,3 +148,5 @@ Get-Content .\ADAuditGeneric.ps1
 
 Get-ChildItem *.csv 
 
+#Let's look at the ones with non-expiring passwords:
+Invoke-Item .\NonExpiringPwdUsers.csv
