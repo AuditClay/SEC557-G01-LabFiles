@@ -2,7 +2,8 @@
   ConvertFrom-Csv |
   Select-Object ServerName, 
     @{n='DateRun';E={(Get-Date).AddDays($_.DateOffset).ToShortDateString()}},
-    None,Low,Medium,High,Critical,Total |
+    Risk, Count |
   Export-Csv -Force -NoTypeInformation -Path vulnData.csv
 
 "Vulnerability information for last 1 year written to .\vulnData.csv"
+

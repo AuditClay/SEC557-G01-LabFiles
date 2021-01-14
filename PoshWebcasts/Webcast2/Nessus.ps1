@@ -23,22 +23,54 @@ $scanResults | Measure-Object
 #You can view the properties using the Get-Member cmdlet
 $scanResults | Select-Object -first 1 | Get-Member -MemberType NoteProperty
 
-#How many hosts were scanned?
+#Which hosts were included in these scans?
 $scanResults.Host | Sort-Object -Unique
+
+#How many hosts were scanned?
+$scanResults | Measure-Object
 
 #you can use the Group-Object command to develop a quick summary of results by risk rating:
 
 $scanResults | Group-Object Risk
 
-#To view only the results with a risk rating of critical, you can use 
+#show all the servers which have at least five critical findings, sorted largest first
+$scanResults |  Where-Object Risk -eq 'critical' |  Group-Object Host | Select-Object Count, Name | Where-Object Count -gt 5 | Sort-Object Count -Descending
+
+#To count all the results with a risk rating of critical, you can use 
 #Where-Object to limit the output of your command:
 
 $scanResults | Group-Object Risk | Where-Object Name -eq 'Critical'
 
-#show all the servers which have at least five critical findings, sorted largest first
-$scanResults |  Where-Object Risk -eq 'critical' |  Group-Object Host | Select-Object Count, Name | Where-Object Count -gt 5 | Sort-Object Count -Descending
+#gather the two values required to calculate the percentage of findings which are scored 'critical'
+$criticalCount = ($scanResults | Group-Object Risk | Where-Object Name -eq 'Critical').Count
 
-#What if I did something like this every day and collectecd the records over time?
+$totalCount = ($scanResults |  Where-Object Risk -ne 'None').Count
+
+#view the values in the variables by invoking them in the PowerShell conso#le:
+"Critical Count:`t " + $criticalCount + "`nTotal Count:`t " + $totalCount
+
+#calculate the percentage of reported findings which are labeled critical by 
+#simply performing the division required
+$criticalCount/$totalCount
+
+#Gather the count of findings per host, per risk level:
+$scanResults | Group-Object Host, Risk
+
+#What if I did something like that PER DAY and saved the results???
 Set-Location ..
 
+#Let's go ask the admins for the results of all the scans for the last year for 100 servers
 .\GetVulnData.ps1
+
+#Let's look at part of the output file:
+Get-Content .\vulnData.csv | Select-Object -first 5
+
+#Pull that into a variable
+$results = Import-Csv .\vulnData.csv
+
+#Convert the data for inport into the dashbaord database - view the first 10
+#for a sanity check
+$results | Select-Object ServerName,Risk,@{n='epoch';e={Get-Date -Date $_.DateRun -AsUTC -UFormat %s}},Count | foreach { "vuln." + $_.ServerName.ToString() + "." + $_.Risk.toString() + " " + $_.epoch.ToString() + " " + $_.count} | Select-Object -First 10
+
+#Use netcat in WSL to do the import
+$results | Select-Object ServerName,Risk,@{n='epoch';e={Get-Date -Date $_.DateRun -AsUTC -UFormat %s}},Count | foreach { "vuln." + $_.ServerName.ToString() + "." + $_.Risk.toString() + " " + $_.epoch.ToString() + " " + $_.count} | wsl nc -vv -N 10.50.7.50 2003
