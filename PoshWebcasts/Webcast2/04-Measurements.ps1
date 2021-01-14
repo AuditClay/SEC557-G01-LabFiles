@@ -40,9 +40,19 @@ Get-ChildItem | Select-Object Subject, Thumbprint | Format-List
 #Get out of the certificate drive
 set-location c:
 
-#There are a host of native commandlet and WMI objects for measuring other
-#settings/attributes of Windows systems. A few examples follow:
+#### LOCAL SECURITY POLICY ######
+#It's not all saved in the registry. Some is "inside" LSASS
+#The ancient SecEdit tool (Security Configuration and Analysis)
+#Let's us query local security policy settings and export to a file
+SecEdit.exe /export /cfg .\localSecPol.txt
 
+#Contents are a text file which you can easily search
+Get-Content .\localSecPol.txt
+
+#To look for an individual setting, use Select-String (think grep)
+#Let's find the minimum password age for local accounts:
+
+Get-Content .\localSecPol.txt | Select-String '^MinimumPasswordAge'
 
 #### PATCHES (HOTFIXES) ######
 #Get a list of all hotfixes installed on the system
@@ -64,20 +74,6 @@ $cred = Get-Credential -UserName auditor -Message "Enter your password"
 
 #Query the remote machine using the credentials
 Get-HotFix -ComputerName 10.50.7.10 -Credential $cred 
-
-#### LOCAL SECURITY POLICY ######
-#It's not all saved in the registry. Some is "inside" LSASS
-#The ancient SecEdit tool (Security Configuration and Analysis)
-#Let's us query local security policy settings and export to a file
-SecEdit.exe /export /cfg .\localSecPol.txt
-
-#Contents are a text file which you can easily search
-Get-Content .\localSecPol.txt
-
-#To look for an individual setting, use Select-String (think grep)
-#Let's find the minimum password age for local accounts:
-
-Get-Content .\localSecPol.txt | Select-String '^MinimumPassword'
 
 
 #### INSTALLED SOFTWARE ######
@@ -101,3 +97,53 @@ Get-Content .\InstalledSoftware.ps1
 
 #Results look like this:
 .\InstalledSoftware.ps1
+
+
+############## ACTIVE DIRECTORY ################################endregion#Import the active directory module to get access to the AD PSDrive provider
+Import-Module ActiveDirectory
+
+#Create a drive mapped to Active Directory. First, we'll need a set of
+#credentials, because this PC is not domain-joined
+$cred=Get-Credential -username auditor -prompt "Enter a password"
+
+#Use the credentitals to connect to our lab DC
+New-PSDrive -name "AD" -PSProvider ActiveDirectory -Root "" -Server "10.50.7.10" -Credential $cred
+
+#See the new PSDrive
+Get-PSDrive
+
+#Set the AD drive as our location
+Set-Location AD:
+
+#What's in there?
+Get-ChildItem
+
+#While we're in this location, we can query AD as if we were a member of the domain
+Get-ADUser -Filter * | Measure-Object
+
+#Grab a count of domain admins
+Get-ADGroupMember -Recursive -Identity "Domain Admins"
+
+#Quick visualize to discuss during our daily status meeting
+Get-ADGroupMember -Recursive -Identity "Domain Admins" | Out-GridView
+
+#We often use a script like this on audits
+Get-Content .\ADAuditGeneric.ps1
+
+#It gathers interesting information about the given domain. A lot of this
+#would make good measures to track over time on a dashboard
+.\ADAuditGeneric.ps1
+
+#When you tell management they've got too many domain administrators
+#They're going to want a list of who they are. This is true for most of these
+#measures, so the script just dumps a CSV for all of them:
+
+Get-ChildItem *.csv 
+
+
+#Get out of the AD drive
+Set-Location c:
+
+#Remove the PS Drive for AD
+Remove-PSDrive -Name "AD"
+Get-PSDrive
