@@ -80,4 +80,3 @@ Get-VMHost | Sort Name | Select Name,   @{N="NTPServer";E={$_ | Get-VMHostNtpSer
 
 
 "Check it here: https://kb.vmware.com/s/article/2143832"
-
