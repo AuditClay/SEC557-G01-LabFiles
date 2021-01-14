@@ -43,3 +43,41 @@ Get-VMHost -Server esxi1 | Format-List *
 #Let's see what is available in ExtensionData
 
 (Get-VMHost).ExtensionData
+
+#Config has the interesting configuration information in it. 
+#It has a number of sub-objects with the detailed settings.
+(Get-VMHost).Extensiondata.Config.Network.DNSConfig
+
+#What porperties does the DNS config have?
+(Get-VMHost).Extensiondata.Config.Network.DNSConfig | Get-Member -Type Property
+
+#See if we can retreive the DNS servers
+$dnsservers = (Get-VMHost).Extensiondata.Config.Network.DNSConfig | Select-Object -ExpandProperty address
+
+$dnsservers
+
+#Your script could check to see that the correct servers are set:
+$dnsservers -contains '8.8.8.8'
+$dnsservers -contains '8.8.4.4'
+
+#Validate the NTP server(s) configured for use by the host
+Get-VMHost -Server esxi1 | Get-VMHostNtpServer
+
+#Check the service status
+Get-VMHost | Get-VMHostService | Where-Object {$_.key -eq "ntpd"} | Select-Object VMHost, Label, Key, Policy, Running, Required
+
+#To consolidate all this into a single query
+Get-VMHost | Sort Name | Select Name,   @{N="NTPServer";E={$_ | Get-VMHostNtpServer}}, @{N="ServiceRunning";E={(Get-VmHostService -VMHost $_ | Where-Object {$_.key-eq "ntpd"} ).Running}}, @{N="ServiceRequired";E={(Get-VmHostService -VMHost $_ | Where-Object {$_.key-eq "ntpd"} ).Required}}
+
+#Patch data can be retrieved with the ESXCLI cmdlets
+(Get-ESXCli -Server esxi1).software.vib.list()
+
+#Get a count of patches by install date (patch velocity)
+(Get-ESXCli -Server esxi1).software.vib.list() | Group-Object InstallDate
+
+#Check the build number of the ESXi installation
+(Get-VMHost).Build
+
+
+"Check it here: https://kb.vmware.com/s/article/2143832"
+

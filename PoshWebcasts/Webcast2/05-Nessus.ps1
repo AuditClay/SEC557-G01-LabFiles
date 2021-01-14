@@ -1,6 +1,7 @@
-"Demo for SEC557 Classes"
 
-"Clay/Carol: Do the Vuln scanner poll"
+
+
+
 ############################################################################
 #NOTE TO CLAY: Run this from your laptop, not the VM, because it uses Excel#
 ############################################################################
@@ -17,10 +18,6 @@ Get-ChildItem
 #Take a look at the content of the result files
 #Notice the multi-line cells which can cause a little trouble
 more .\Results_set_1.csv
-
-#Trying to use convertFrom-Csv will give a number of broken objects
-#It turns out the file has some embedded CR characters which break some field names
-Get-Content .\Results_set_1.csv | ConvertFrom-Csv | Select-Object -First 3
 
 #Fortunately, import-csv handles these multi-line field correctly(ish)
 import-csv .\Results_set_1.csv | Select-Object -First 10
@@ -81,7 +78,7 @@ $total = ($d |  Where-Object Risk -ne 'None').Count
 #Check the percentage
 $crit/$total
 
-
+##What if we did this every day with 
 ##################### STOP HERE FOR WEBCAST DEMO######################################endregion
 
 
