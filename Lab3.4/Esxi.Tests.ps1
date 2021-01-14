@@ -25,7 +25,7 @@ Describe "ESXi Tests" {
             #List of approved build numbers for the enterprise
             $approvedBuilds = '17167537','17097218'
             $build = (Get-VMHost).Build
-            $build -in $approvedBuilds | Should -be $true
+            $build -in $approvedBuilds | Should -Be $true
         }
 
 
@@ -50,15 +50,17 @@ Describe "ESXi Tests" {
               $ntpSettings.Required | Should -Be $true
         }
     }
-    Context "Storage" {    
-        It "DataStore has > 15% free space" {
+    Context "Storage" {  
+        BeforeAll {
             $ds = (Get-VMHost -Server esxi1 | Get-Datastore)
+        }  
+        It "DataStore has > 15% free space" {
             $pctFree = $ds.FreeSpaceGB / $ds.CapacityGB * 100.0
             $pctFree | Should -BeGreaterThan 15.0
         }
 
         It "FileSystem version >= 6" {
-            $ds.FileSystemVersion | Should -Be GreaterOrEqual 6
+            $ds.FileSystemVersion | Should -BeGreaterOrEqual 6
         }
     }
 }
