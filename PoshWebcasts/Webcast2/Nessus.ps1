@@ -70,7 +70,7 @@ $results = Import-Csv .\vulnData.csv
 
 $results.Count
 
-#Convert the data for inport into the dashbaord database - view the first 10
+#Convert the data for inport into the dashboard database - view the first 10
 #for a sanity check
 $results | Select-Object ServerName,Risk,@{n='epoch';e={Get-Date -Date $_.DateRun -AsUTC -UFormat %s}},Count | foreach { "vuln." + $_.ServerName.ToString() + "." + $_.Risk.toString() + " " + $_.count + " " + $_.epoch.ToString()} | Select-Object -First 10
 
