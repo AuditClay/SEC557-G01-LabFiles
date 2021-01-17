@@ -68,3 +68,28 @@ function Convert-PatchVelocity {
         "$MetricPath $Count $epochTime"
     }
 }
+
+function Convert-PesterResults {
+    [CmdletBinding()]
+    Param(
+        [DateTime]$DateRun = (Get-Date),
+        [string]$MetricPath,
+        [Parameter(ValueFromPipelineByPropertyName)]$FailedCount,
+        [Parameter(ValueFromPipelineByPropertyName)]$PassedCount,
+        [Parameter(ValueFromPipelineByPropertyName)]$SkippedCount
+    )
+    
+    #stop execution with an error if no metric path was specified
+    if( -Not ($MetricPath)){
+        Throw "MetricPath not included"
+    }
+    $epochTime = Get-Date -date $DateRun -AsUTC -UFormat %s
+    $totalCount = $PassedCount + $FailedCount
+    $failPct = $FailedCount / $TotalCount * 100.0
+
+    "$MetricPath.fail $FailedCount $epochTime"
+    "$MetricPath.pass $PassedCount $epochTime"
+    "$MetricPath.skip $SkippedCount $epochTime"
+    "$MetricPath.total $totalCount $epochTime"
+    "$MetricPath.failpct $failPct $epochTime"
+}
