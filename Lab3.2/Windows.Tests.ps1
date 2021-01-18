@@ -11,7 +11,7 @@ Describe "Windows Workstation Compliance Tests" {
         }
         It "Local admin account disabled" {
             
-            $disabledUsers | Should -Contain "Administrator"
+            $disabledUsers -contains "Administrator" | Should -Be $true
         }
         It "Guest user disabled" {
             $disabledUsers | Should -Contain "Guest"
