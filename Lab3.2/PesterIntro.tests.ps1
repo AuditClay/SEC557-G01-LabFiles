@@ -1,3 +1,7 @@
+#This script contains most of the examples used in the Pester
+#portion of the PowerPoints for SEC557
+#It is used to demonstrate using Describe, Content and It blocks,
+#as well as showing many of the Should operators.
 Describe "SEC557 Pester Example Context" {
     Context "Test Set 1" {
         It "My first Pester test" {
@@ -27,11 +31,11 @@ Describe "SEC557 Pester Example Context" {
         }
 
         It "Demonstrate FileContentMatch" {
-Set-Content -Path '.\testFile.txt' -Value "Test`nFile"
-#tests all pass
-'.\testFile.txt' | Should -FileContentMatch 'test'
-'.\testFile.txt' | Should -FileContentMatchExactly 'Test'
-'.\testFile.txt' | Should -FileContentMatchMultiline 'Test\nFile'
+            Set-Content -Path '.\testFile.txt' -Value "Test`nFile"
+            #tests all pass
+            '.\testFile.txt' | Should -FileContentMatch 'test'
+            '.\testFile.txt' | Should -FileContentMatchExactly 'Test'
+            '.\testFile.txt' | Should -FileContentMatchMultiline 'Test\nFile'
         }
 
         It "Demonstrate -BeIn" {
