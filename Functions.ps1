@@ -1,6 +1,6 @@
 function Convert-InspecResults{
     #This script loads an Inspec result file in JSON format and
-    #processes it into the Graphite inpurt text format. You can
+    #processes it into the Graphite input text format. You can
     #run the output of this script through netcat to upload it
     #straight into Graphite
 
