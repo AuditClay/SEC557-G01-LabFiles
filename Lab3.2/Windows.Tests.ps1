@@ -7,11 +7,11 @@ Describe "Windows Workstation Compliance Tests" {
         #context block are executed. The $disabledUsers variable will be available
         #to all tests
         BeforeAll {
-            $disabledUsers = Get-LocalUser | Where-Object Enabled -eq $False
+            $disabledUsers = (Get-LocalUser | Where-Object Enabled -eq $False).Name
         }
         It "Local admin account disabled" {
             
-            "administrator" | Should -BeIn $disabledUsers
+            $disabledUsers | Should -Contain "administrator"
         }
         It "Guest user disabled" {
             $disabledUsers | Should -Contain "Guest"
