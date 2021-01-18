@@ -11,10 +11,10 @@ Describe "Windows Workstation Compliance Tests" {
         }
         It "Local admin account disabled" {
             
-            $disabledUsers | Should -Contain "administrator"
+            $disabledUsers | Should -Contain "Administrator"
         }
         It "Guest user disabled" {
-            $disabledUsers | Should -Contain "guest"
+            $disabledUsers | Should -Contain "Guest"
         }
     }
     Context "Local Security Policy"{
