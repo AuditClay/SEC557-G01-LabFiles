@@ -52,10 +52,6 @@ $DomainAdmins = (Get-ADGroupMember -Recursive -Identity "Domain Admins" | Measur
 $SchemaAdmins = (Get-ADGroupMember -Recursive -Identity "Schema Admins" | Measure-Object).Count
 $EnterpriseAdmins = (Get-ADGroupMember -Recursive -Identity "Enterprise Admins" | Measure-Object).Count
 
-#Enabled users with password which never expires
-$svcAccts = Get-ADUser -filter {PasswordNeverExpires -eq $true -and Enabled -eq $true} -SearchBase 'OU=Service Accounts,OU=Information Systems,DC=CNHSA,DC=COM'
-$mboxAccts = Get-ADUser -filter {PasswordNeverExpires -eq $true -and Enabled -eq $true} -SearchBase 'CN=Monitoring Mailboxes,CN=Microsoft Exchange System Objects,DC=CNHSA,DC=COM'
-
 $PasswordNeverExpires = (Get-ADUser -filter {PasswordNeverExpires -eq $true -and Enabled -eq $true} | 
     Where-Object {$_.distinguishedName -notin ($svcAccts).distinguishedName -and $_.distinguishedName -notin ($mboxAccts).distinguishedName} | Measure-Object).Count
  
@@ -69,62 +65,62 @@ $PasswordNotRequired = (Get-ADUser -Filter 'enabled -eq $true -and PasswordNotRe
 
 $outputLine = "ad.enabledUsers " 
 $outputLine += $EnabledUsers.ToString()
-$outputLine += " " + $dateString
+$outputLine += " " + $epochDate
 $outputLine
 
 $outputLine = "ad.disabledUsers " 
 $outputLine += $DisabledUsers.ToString()
-$outputLine += " " + $dateString
+$outputLine += " " + $epochDate
 $outputLine
 
 $outputLine = "ad.totalUsers " 
 $outputLine += $TotalUsers.ToString()
-$outputLine += " " + $dateString
+$outputLine += " " + $epochDate
 $outputLine
 
 $outputLine = "ad.stalePasswordUsers " 
 $outputLine += $StalePasswordUsers.ToString()
-$outputLine += " " + $dateString
+$outputLine += " " + $epochDate
 $outputLine
 
 $outputLine = "ad.inactiveUsers " 
 $outputLine += $InactiveUsers.ToString()
-$outputLine += " " + $dateString
+$outputLine += " " + $epochDate
 $outputLine
 
 $outputLine = "ad.activeUsers " 
 $outputLine += $ActiveUsers.ToString()
-$outputLine += " " + $dateString
+$outputLine += " " + $epochDate
 $outputLine
 
 $outputLine = "ad.domainAdmins " 
 $outputLine += $DomainAdmins.ToString()
-$outputLine += " " + $dateString
+$outputLine += " " + $epochDate
 $outputLine
 
 $outputLine = "ad.schemaAdmins " 
 $outputLine += $SchemaAdmins.ToString()
-$outputLine += " " + $dateString
+$outputLine += " " + $epochDate
 $outputLine
 
 $outputLine = "ad.enterpriseAdmins " 
 $outputLine += $EnterpriseAdmins.ToString()
-$outputLine += " " + $dateString
+$outputLine += " " + $epochDate
 $outputLine
 
 $outputLine = "ad.passwordNeverExpires " 
 $outputLine += $PasswordNeverExpires.ToString()
-$outputLine += " " + $dateString
+$outputLine += " " + $epochDate
 $outputLine
 
 $outputLine = "ad.passwordNeverSet " 
 $outputLine += $PasswordNeverSet.ToString()
-$outputLine += " " + $dateString
+$outputLine += " " + $epochDate
 $outputLine
 
 $outputLine = "ad.passwordNotRequired " 
 $outputLine += $PasswordNotRequired.ToString()
-$outputLine += " " + $dateString
+$outputLine += " " + $epochDate
 $outputLine
 
 #If the alternate connection was used, then get back to the original location and remove the PS drive
