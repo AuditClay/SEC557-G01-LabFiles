@@ -9,7 +9,7 @@ function Convert-InspecResults{
 
     #The script will add .fail, .pass, .total, .skip, .failpct metrics
     #to the base name, add the count for each and the epoch date
-    #If no DateRun paramaeter is supplied, the current date and time will be used
+    #If no DateRun parameter is supplied, the current date and time will be used
     #If no FileName parameter is specified, the script will try to use
     #a file named "results.json"
     param ( 
