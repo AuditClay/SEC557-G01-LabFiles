@@ -1,7 +1,4 @@
-
-
-
-
+"Demo for SEC557"
 ############################################################################
 #NOTE TO CLAY: Run this from your laptop, not the VM, because it uses Excel#
 ############################################################################
@@ -17,14 +14,14 @@ Get-ChildItem
 
 #Take a look at the content of the result files
 #Notice the multi-line cells which can cause a little trouble
-more .\Results_set_1.csv
+Get-Content .\Results_set_1.csv | Select-Object -first 10
 
 #Fortunately, import-csv handles these multi-line field correctly(ish)
 import-csv .\Results_set_1.csv | Select-Object -First 10
 
 #Let's take a look a the fields returned
 #Host and Risk should be helpful for a quick look at how bad the problem is
-import-csv .\Results_set_1.csv | Select-Object -First 1 | Get-Member | Format-List *
+import-csv .\Results_set_1.csv | Select-Object -First 1 | Get-Member 
 
 #How many results are there in one of the files?
 import-csv .\Results_set_1.csv | Measure-Object
@@ -39,7 +36,7 @@ Get-ChildItem *.csv
 Get-ChildItem *.csv | Select-Object -ExpandProperty FullName
 
 #Take a quick look to see if the import is working
-import-csv -path (Get-ChildItem *.csv | Select-Object -ExpandProperty FullName) | Select-Object -First 5
+import-csv -path (Get-ChildItem *.csv | Select-Object -ExpandProperty FullName) | Select-Object -First 3
 
 #How many total results are there in all the files combined?
 import-csv -path (Get-ChildItem *.csv | Select-Object -ExpandProperty FullName) | Measure-Object
@@ -78,9 +75,7 @@ $total = ($d |  Where-Object Risk -ne 'None').Count
 #Check the percentage
 $crit/$total
 
-##What if we did this every day with 
-##################### STOP HERE FOR WEBCAST DEMO######################################endregion
-
+##What if we did this every day and imported the resutls into a dashboard? What would that look like?
 
 #Now, let's put the results into an excel file for tactical use by server admins trying to remediate
 #Define the filename and make sure there's not an old one lying around
@@ -88,7 +83,7 @@ $excelFileName = ".\Vulns.xlsx"
 if( Test-Path $excelFileName ) { Remove-Item $excelFileName }
 
 #Build the spreadsheet, using the properties from the scan that will be helpful for the admins
-# "See Also" contains a list of URLs which might be helpful to the adminis doing the work,
+# "See Also" contains a list of URLs which might be helpful to the admins doing the work,
 # create a new field called "SeeAlso" with those links on a single line (change the embedded newlines to spaces)
 $d | Where-Object Risk -ne 'None' | Select-Object Name,Host,Risk,@{N='SeeAlso';E={$_.'See Also' -replace "\n", " "}},Solution | Export-Excel -path $excelFilename -AutoFilter 
 
@@ -111,19 +106,17 @@ if( Test-Path $excelFileName ) { Remove-Item $excelFileName }
 $highFormat = New-ConditionalText "High" -Range "C:C" -ForeGroundColor Black -BackgroundColor orange
 $medFormat = New-ConditionalText "Medium" -Range "C:C" -ForeGroundColor Black -BackgroundColor yellow
 
-$d | Where-Object Risk -ne 'None' | 
-  Select-Object Name,Host,Risk,@{N='SeeAlso';E={$_.'See Also' -replace "\n", " "}},Solution | 
-  Export-Excel -path $excelFilename -WorksheetName "VulnScan" -AutoFilter -ConditionalFormat $critFormat, $highFormat, $medFormat
+$d | Where-Object Risk -ne 'None' |   Select-Object Name,Host,Risk,@{N='SeeAlso';E={$_.'See Also' -replace "\n", " "}},Solution |   Export-Excel -path $excelFilename -WorksheetName "VulnScan" -AutoFilter -ConditionalFormat $critFormat, $highFormat, $medFormat
 
 #Open the spreadsheet
 Invoke-Item $excelFileName
 
 if( Test-Path $excelFileName ) { Remove-Item $excelFileName }
 #Build the spreadsheet, adding a pivot table for findings by host
-$d | Where-Object Risk -ne 'None' | 
-  Select-Object Name,Host,Risk,@{N='SeeAlso';E={$_.'See Also' -replace "\n", " "}},Solution | 
-  Export-Excel -path $excelFilename -AutoFilter -includePivotTable -PivotRows Host,Name,Solution,SeeAlso -PivotFilter Risk
+$d | Where-Object Risk -ne 'None' | Select-Object Name,Host,Risk,@{N='SeeAlso';E={$_.'See Also' -replace "\n", " "}},Solution | Export-Excel -path $excelFilename -AutoFilter -includePivotTable -PivotRows Host,Name,Solution,SeeAlso -PivotFilter Risk
 
+#Open the spreadsheet
+Invoke-Item $excelFileName
 
 $critFormat = New-ConditionalText "Critical" -Range "C:C" -ForeGroundColor Black -BackgroundColor Red
 $highFormat = New-ConditionalText "High" -Range "C:C" -ForeGroundColor Black -BackgroundColor orange
@@ -131,20 +124,13 @@ $medFormat = New-ConditionalText "Medium" -Range "C:C" -ForeGroundColor Black -B
 
 if( Test-Path $excelFileName ) { Remove-Item $excelFileName }
 
-$xl = $d | Where-Object Risk -ne 'None' | 
-  Select-Object Name,Host,Risk,@{N='SeeAlso';E={$_.'See Also' -replace "\n", " "}},Solution | 
-  Export-Excel -path $excelFilename -WorksheetName "VulnScan" -AutoFilter -PassThru -ConditionalFormat $critFormat, $highFormat, $medFormat
+#use -PassThru to create the object, but don't save the spreadsheet until it's ready
+$xl = $d | Where-Object Risk -ne 'None' | Select-Object Name,Host,Risk,@{N='SeeAlso';E={$_.'See Also' -replace "\n", " "}},Solution | Export-Excel -path $excelFilename -WorksheetName "VulnScan" -AutoFilter -PassThru -ConditionalFormat $critFormat, $highFormat, $medFormat
 
 $pt1 = New-PivotTableDefinition -PivotTableName "ByHost" -PivotRows Host,Name,Solution,SeeAlso -PivotFilter Risk
 $pt2 = New-PivotTableDefinition -PivotTableName "ByVuln" -PivotRows Name,Host,Solution,SeeAlso -PivotFilter Risk
 
 $xl = Export-Excel -ExcelPackage $xl -WorksheetName "VulnScan" -PivotTableDefinition $pt1 -PassThru
 Export-Excel -ExcelPackage $xl -WorksheetName "VulnScan" -PivotTableDefinition $pt2 -Show
-
-
-
-
-#Open the spreadsheet
-Invoke-Item $excelFileName
 
 Set-Location .. 
