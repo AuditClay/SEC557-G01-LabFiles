@@ -1,6 +1,3 @@
-#Use the student token if they have one, to save rate limiting
-#$token="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"
-
 Set-Location C:\SEC557\Lab2.1
 
 #Set the location of the files
