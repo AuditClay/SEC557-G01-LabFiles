@@ -1,3 +1,18 @@
+$cloudbenchmarks = @(
+    'aws.s3',
+    'aws.iam', 
+    'aws.lambda', 
+    'aws.rds', 
+    'aws.eks', 
+    'aws.waf', 
+    'aws.cloudfront' )
+$onpremtypes =  @(
+    'windows',
+    'linux',
+    'vmhost',
+    'docker',
+    'kubernetes'
+)
 function RandomWalk{
     param(
         $numResults = 52,
@@ -25,10 +40,8 @@ function RandomWalk{
 
 #Dump data for on-prem systems first
 Get-Random -SetSeed 314159 | out-null
-RandomWalk -numResults 52
-@('onprem.windows','onprem.linux','onprem.vmware','onprem.docker','onprem.k8s'
-  'aws.s3', 'aws.iam', 'aws.lambda', 'aws.rds', 'aws.eks', 'aws.waf', 'aws.cloudfront' ) | 
-  ForEach-Object {
+
+$cloudbenchmarks | ForEach-Object {
     $measurementType = $_
     $numTests = Get-Random -Minimum 15 -Maximum 40
     $maxResults = $numTests
@@ -37,7 +50,7 @@ RandomWalk -numResults 52
     $dateOffset = -365
     foreach( $result in $failresults){
         $epochTime = get-date -date ((get-date).AddDays($dateOffset)) -AsUTC -UFormat %s
-        $base = "benchdemo.$measurementType"
+        $base = "benchdemo.cloud.$measurementType"
         "$base.fail $result $epochTime"
         $numSuccess = $numTests - $result
         "$base.success $numSuccess $epochTime"
@@ -49,4 +62,32 @@ RandomWalk -numResults 52
     }
 }
 
+#Number of servers to build per category
+$numServers=20
+#Build up server-level data for on-prem technologies
 
+$onpremtypes | ForEach-Object {
+    $measurementType = $_
+    $numTests = Get-Random -Minimum 15 -Maximum 40
+    $maxResults = $numTests
+
+    for( $i=1; $i-le $numServers; $i++){
+        $hostname = "Host$i"
+        $failresults = RandomWalk -numResults 52 -maxResult $maxResults
+    
+        $dateOffset = -365
+        foreach( $result in $failresults){
+            $epochTime = get-date -date ((get-date).AddDays($dateOffset)) -AsUTC -UFormat %s
+            $base = "benchdemo.onprem.$measurementType.$hostname"
+            "$base.fail $result $epochTime"
+            $numSuccess = $numTests - $result
+            "$base.success $numSuccess $epochTime"
+            $failPct = [float]$result/[float]$numTests*100.0
+            "$base.total $numTests $epochTime"
+            "$base.failPct $failPct $epochTime"
+            
+            $dateOffset += 7
+        }
+    }
+
+}
