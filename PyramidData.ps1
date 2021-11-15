@@ -72,7 +72,7 @@ $onpremtypes | ForEach-Object {
     $maxResults = $numTests
 
     for( $i=1; $i-le $numServers; $i++){
-        $hostname = "$measurementType.host$i"
+        $hostname = "$measurementType" + "host$i"
         $failresults = RandomWalk -numResults 52 -maxResult $maxResults
     
         $dateOffset = -365
