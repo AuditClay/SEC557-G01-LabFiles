@@ -47,7 +47,7 @@ $cloudbenchmarks | ForEach-Object {
     $maxResults = $numTests
     $failresults = RandomWalk -numResults 52 -maxResult $maxResults
     
-    $dateOffset = -365
+    $dateOffset = -58
     foreach( $result in $failresults){
         $epochTime = get-date -date ((get-date).AddDays($dateOffset)) -AsUTC -UFormat %s
         $base = "benchdemo.cloud.$measurementType"
@@ -75,7 +75,7 @@ $onpremtypes | ForEach-Object {
         $hostname = "$measurementType" + "host$i"
         $failresults = RandomWalk -numResults 52 -maxResult $maxResults
     
-        $dateOffset = -365
+        $dateOffset = -358
         foreach( $result in $failresults){
             $epochTime = get-date -date ((get-date).AddDays($dateOffset)) -AsUTC -UFormat %s
             $base = "benchdemo.onprem.$measurementType.$hostname"
