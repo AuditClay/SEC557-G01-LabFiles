@@ -1156,12 +1156,12 @@
     "list": []
   },
   "time": {
-    "from": "now-90d",
+    "from": "now-1y",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Reporting Pyramid",
   "uid": "RwF6fB5nz",
-  "version": 3
+  "version": 5
 }
