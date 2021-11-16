@@ -236,7 +236,7 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisLabel": "",
+            "axisLabel": "Test Fail %",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -264,6 +264,7 @@
             }
           },
           "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -307,7 +308,7 @@
       "targets": [
         {
           "refId": "A",
-          "target": "aliasByNode(averageSeries(summarize(benchdemo.*.*.*.failPct, '1w', 'sum', true)), 3)"
+          "target": "alias(averageSeries(summarize(benchdemo.*.*.*.failPct, '1w', 'sum', true)), 'Company-Wide Average')"
         }
       ],
       "timeFrom": null,
@@ -408,7 +409,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Server"
+                "value": "Service"
               }
             ]
           }
@@ -566,8 +567,9 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisLabel": "",
+            "axisLabel": "Test Fail %",
             "axisPlacement": "auto",
+            "axisSoftMax": 60,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -602,12 +604,8 @@
                 "value": null
               },
               {
-                "color": "#EAB839",
-                "value": 1
-              },
-              {
                 "color": "red",
-                "value": 5
+                "value": 80
               }
             ]
           }
@@ -631,6 +629,7 @@
           "mode": "single"
         }
       },
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "refId": "A",
@@ -639,7 +638,7 @@
       ],
       "timeFrom": "13w",
       "timeShift": null,
-      "title": "AWS History",
+      "title": "AWS Compliance History",
       "type": "timeseries"
     },
     {
@@ -650,8 +649,9 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisLabel": "",
+            "axisLabel": "Test Fail %",
             "axisPlacement": "auto",
+            "axisSoftMax": 60,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -678,6 +678,7 @@
             }
           },
           "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -700,7 +701,7 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 10,
+        "w": 9,
         "x": 9,
         "y": 31
       },
@@ -731,7 +732,7 @@
       "description": "",
       "gridPos": {
         "h": 3,
-        "w": 19,
+        "w": 18,
         "x": 0,
         "y": 40
       },
@@ -757,7 +758,7 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisLabel": "",
+            "axisLabel": "Test Fail %",
             "axisPlacement": "auto",
             "axisSoftMax": 6,
             "barAlignment": 0,
@@ -843,7 +844,7 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisLabel": "",
+            "axisLabel": "Test Fail %",
             "axisPlacement": "auto",
             "axisSoftMax": 6,
             "barAlignment": 0,
@@ -895,7 +896,7 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 10,
+        "w": 9,
         "x": 9,
         "y": 43
       },
@@ -1113,7 +1114,7 @@
       },
       "gridPos": {
         "h": 13,
-        "w": 10,
+        "w": 9,
         "x": 9,
         "y": 51
       },
@@ -1155,12 +1156,12 @@
     "list": []
   },
   "time": {
-    "from": "now-1y",
+    "from": "now-90d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Reporting Pyramid",
   "uid": "RwF6fB5nz",
-  "version": 9
+  "version": 3
 }
