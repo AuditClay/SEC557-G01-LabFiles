@@ -6,7 +6,7 @@ $today = (get-date).ToShortDateString()
 Get-Random -SetSeed 314159 | Out-Null
 
 "#this script creates a table in MySql to emonstrate using tabular data in Grafana"
-"create database tabledemo;"
+"create database if not exists tabledemo;"
 "use tabledemo;"
 "create table if not exists serverstats( dateRun date, servername varchar(100), diskfree int, cpuavg int, uptime int);"
 "delete from serverstats;"
