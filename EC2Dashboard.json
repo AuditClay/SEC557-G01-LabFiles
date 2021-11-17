@@ -1,0 +1,179 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": 2,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "datasource": "CloudWatch",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 17,
+          "x": 0,
+          "y": 0
+        },
+        "id": 2,
+        "interval": null,
+        "maxDataPoints": null,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {},
+          "textMode": "auto"
+        },
+        "pluginVersion": "8.2.3",
+        "targets": [
+          {
+            "alias": "",
+            "dimensions": {
+              "BucketName": "aws-cloudtrail-logs-098451652541-cc36da6c"
+            },
+            "expression": "",
+            "id": "",
+            "matchExact": false,
+            "metricName": "NumberOfObjects",
+            "namespace": "AWS/S3",
+            "period": "",
+            "refId": "A",
+            "region": "us-east-1",
+            "statistic": "Average"
+          }
+        ],
+        "timeFrom": "30d",
+        "timeShift": null,
+        "title": "CloudTrail Bucket Item Count",
+        "type": "stat"
+      },
+      {
+        "datasource": "CloudWatch",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 17,
+          "x": 0,
+          "y": 9
+        },
+        "id": 3,
+        "interval": null,
+        "maxDataPoints": null,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {},
+          "textMode": "auto"
+        },
+        "pluginVersion": "8.2.3",
+        "targets": [
+          {
+            "alias": "",
+            "dimensions": {},
+            "expression": "",
+            "id": "",
+            "matchExact": false,
+            "metricName": "CPUUtilization",
+            "namespace": "AWS/EC2",
+            "period": "",
+            "refId": "A",
+            "region": "us-east-1",
+            "statistic": "Average"
+          }
+        ],
+        "timeFrom": "30d",
+        "timeShift": null,
+        "title": "EC2 CPU Utilization",
+        "type": "stat"
+      }
+    ],
+    "schemaVersion": 31,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-30d",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "EC2 Demo",
+    "uid": "x5Hg18c7z",
+    "version": 1
+  }
