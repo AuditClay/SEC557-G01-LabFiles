@@ -10,8 +10,6 @@ Get-Random -SetSeed 314159 | Out-Null
 "use tabledemo;"
 "create table if not exists serverstats( dateRun date, servername varchar(100), diskfree int, cpuavg int, uptime int);"
 "delete from serverstats;"
-"#data in table is:"
-"select * from serverstats;"
 
 #Create data for 10 servers
 for( $i=0; $i -lt 10; $i++){
@@ -27,4 +25,5 @@ for( $i=0; $i -lt 10; $i++){
     # "sec557.demo.table.$hostname.uptimedays $uptimeDays $todaySec"
 }
 
-
+"#data in table is:"
+"select * from serverstats;"
