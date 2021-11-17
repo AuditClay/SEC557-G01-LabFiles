@@ -18,7 +18,6 @@ for( $i=0; $i -lt 10; $i++){
     $cpuAvg = Get-Random -Minimum 0 -Maximum 100
     $uptimeDays = Get-Random -Minimum 0 -Maximum 365
 
-    "$hostname,$diskFree,$cpuavg,$uptimeDays"
     "insert into serverstats (dateRun, servername, diskfree, cpuavg, uptime values "
     "('$today', '$hostname', $diskfree, $cpuAvg, $uptimeDays);"
     # "sec557.demo.table.$hostname.diskfree $diskFree $todaySec"
