@@ -6,8 +6,8 @@ $today = Get-Date -Format "yyyy-MM-dd"
 Get-Random -SetSeed 314159 | Out-Null
 
 "#this script creates a table in MySql to emonstrate using tabular data in Grafana"
-"create database if not exists tabledemo;"
-"use tabledemo;"
+"create database if not exists grafana;"
+"use grafana;"
 "create table if not exists serverstats( dateRun date, servername varchar(100), diskfree int, cpuavg int, uptime int);"
 "delete from serverstats;"
 
