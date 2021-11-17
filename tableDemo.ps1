@@ -1,5 +1,5 @@
 #Get today's date with no time 
-$today = (get-date).ToShortDateString()
+$today = Get-Date -Format "yyyy-MM-dd"
 
 #Create a predictable "random" number generator so all
 #students get the same results
