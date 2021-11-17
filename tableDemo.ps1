@@ -15,7 +15,7 @@ for( $i=0; $i -lt 10; $i++){
     $cpuAvg = Get-Random -Minimum 0 -Maximum 100
     $uptimeDays = Get-Random -Minimum 0 -Maximum 365
 
-    "demo.table.$hostname.diskfree $diskFree $todaySec"
-    "demo.table.$hostname.cpuavg $cpuAvg $todaySec"
-    "demo.table.$hostname.uptimedays $uptimeDays $todaySec"
+    "sec557.demo.table.$hostname.diskfree $diskFree $todaySec"
+    "sec557.demo.table.$hostname.cpuavg $cpuAvg $todaySec"
+    "sec557.demo.table.$hostname.uptimedays $uptimeDays $todaySec"
 }
