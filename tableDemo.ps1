@@ -1,6 +1,3 @@
-#Get today's date with no time 
-$today = Get-Date -Format "yyyy-MM-dd"
-
 #Create a predictable "random" number generator so all
 #students get the same results
 Get-Random -SetSeed 314159 | Out-Null
@@ -14,7 +11,8 @@ Get-Random -SetSeed 314159 | Out-Null
 #Create data for 10 servers for 10 days
 for( $day = (Get-Date).addDays(-10); $day -le (Get-date); $day = $day.AddDays(1)){
     for( $i=0; $i -lt 10; $i++){
-        $today = $day.ToShortDateString()
+        #Get today's date with no time 
+        $today = Get-Date -Date $day -Format "yyyy-MM-dd"  
         $hostname = "Server$i"
         $diskFree = Get-Random -Minimum 0 -Maximum 100
         $cpuAvg = Get-Random -Minimum 0 -Maximum 100
