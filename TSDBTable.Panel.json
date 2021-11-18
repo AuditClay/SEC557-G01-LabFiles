@@ -1,0 +1,141 @@
+{
+    "id": 2,
+    "gridPos": {
+      "h": 12,
+      "w": 12,
+      "x": 0,
+      "y": 10
+    },
+    "type": "table",
+    "title": "Server Metrics as Table",
+    "datasource": "MySQL",
+    "pluginVersion": "8.2.3",
+    "fieldConfig": {
+      "defaults": {
+        "custom": {
+          "align": "auto",
+          "displayMode": "auto"
+        },
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        },
+        "mappings": [],
+        "color": {
+          "mode": "thresholds"
+        }
+      },
+      "overrides": [
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "diskfree"
+          },
+          "properties": [
+            {
+              "id": "custom.displayMode",
+              "value": "color-background-solid"
+            },
+            {
+              "id": "thresholds",
+              "value": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "semi-dark-red",
+                    "value": null
+                  },
+                  {
+                    "color": "semi-dark-yellow",
+                    "value": 10
+                  },
+                  {
+                    "color": "semi-dark-green",
+                    "value": 20
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "cpuavg"
+          },
+          "properties": [
+            {
+              "id": "custom.displayMode",
+              "value": "color-background-solid"
+            },
+            {
+              "id": "thresholds",
+              "value": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "options": {
+      "showHeader": true,
+      "sortBy": [
+        {
+          "desc": false,
+          "displayName": "dateRun"
+        }
+      ]
+    },
+    "targets": [
+      {
+        "format": "table",
+        "group": [],
+        "metricColumn": "none",
+        "rawQuery": true,
+        "rawSql": "SELECT   dateRun, servername, diskfree,cpuavg,uptime \nFROM serverstats \nwhere $__timeFilter(daterun)\norder by daterun asc",
+        "refId": "A",
+        "select": [
+          [
+            {
+              "params": [
+                "value"
+              ],
+              "type": "column"
+            }
+          ]
+        ],
+        "timeColumn": "time",
+        "where": [
+          {
+            "name": "$__timeFilter",
+            "params": [],
+            "type": "macro"
+          }
+        ]
+      }
+    ]
+  }
