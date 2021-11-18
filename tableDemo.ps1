@@ -30,8 +30,9 @@ for( $day = (Get-Date).addDays(-10); $day -le (Get-date); $day = $day.AddDays(1)
 "select * from serverstats;"
 <#
 SELECT
-  daterun AS "time",
+  daterun as time,
   servername, diskfree,cpuavg,uptime
 FROM serverstats
-ORDER BY time
+where daterun = cast(now() as date)
+ORDER BY time desc
 #>
