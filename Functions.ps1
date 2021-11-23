@@ -2,10 +2,11 @@ Function Get-GraphiteMetricList {
     param(
         $APIHost = 'localhost',
         $APIPort = 8888,
-        $APIProtocol = 'http'
+        $APIProtocol = 'http',
+        $query = '*'
     )
 
-    $uri = "$APIProtocol`://$APIHost`:$APIPort/metrics/index.json"
+    $uri = "$APIProtocol`://$APIHost`:$APIPort/metrics/find?query=$query"
 
     Invoke-RestMethod -uri $uri
     
