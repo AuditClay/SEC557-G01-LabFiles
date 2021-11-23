@@ -17,9 +17,7 @@ Function Get-GraphiteMetric {
         $uri += "&until=$until"
     }
 
-    $uri
     $metrics = Invoke-RestMethod -uri $uri
-    #$metrics
     $outputArray = @()
     foreach( $metric in $metrics){
         foreach ($datapoint in $metric.datapoints) {
