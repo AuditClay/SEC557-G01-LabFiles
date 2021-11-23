@@ -1,3 +1,42 @@
+Function Get-GraphiteMetric {
+    param(
+        $APIHost = 'localhost',
+        $APIPort = 8888,
+        $APIProtocol = 'http',
+        $target ="aliasByNode(summarize(benchdemo.onprem.windows.*.failPct, '1w', 'last', false), 3, 4)",
+        $from,
+        $until
+    )
+
+    $uri = "$APIProtocol`://$APIHost`:$APIPort/render?target=$target&format=json"
+
+    if( $from ) {
+        $uri += "&from=$from"
+    }
+    if( $until ){
+        $uri += "&until=$until"
+    }
+
+    $uri
+    $metrics = Invoke-RestMethod -uri $uri
+    #$metrics
+    $outputArray = @()
+    foreach( $metric in $metrics){
+        foreach ($datapoint in $metric.datapoints) {
+            if( $null -ne $datapoint[0] ) {
+                $outputObject = [PSCustomObject]@{
+                    Metric = $metric.target
+                    Date = get-date -UnixTimeSeconds $datapoint[1]
+                    EpochTime = $datapoint[1]
+                    Value = $datapoint[0]
+                }
+                $outputArray += $outputObject
+            }
+        }
+    }
+    $outputArray
+}
+
 function Convert-InspecResults{
     #This script loads an Inspec result file in JSON format and
     #processes it into the Graphite input text format. You can
