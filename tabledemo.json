@@ -186,7 +186,7 @@
           ]
         }
       ],
-      "title": "Server Metrics as Table",
+      "title": "Relational Server Metrics as Table",
       "type": "table"
     },
     {
@@ -327,7 +327,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Server Metrics as Time Series",
+      "title": "Relational Server Metrics as Time Series",
       "type": "table"
     },
     {
